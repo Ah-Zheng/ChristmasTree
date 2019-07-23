@@ -1,0 +1,103 @@
+<!--    * -->
+<!--   *** -->
+<!--  ***** -->
+<!-- ******* -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>輸入聖誕樹的高度，然後用*組合出來</title>
+    <style>
+        .result {
+            width: 100vw;
+            display: block;
+        }
+
+        #show {
+            margin: 0 auto;
+        }
+
+        /* .container {
+            position: absolute;
+            top: 20px;
+            left: 38%;
+        } */
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <label for="treeHeight">Tree Height : </label>
+        <input type="number" name="treeHeight" id="treeHeight">
+        <button id="send">送出</button>
+        <div class="result">
+            <p>下列為結果 : </p>
+            <div id="show"></div>
+        </div>
+    </div>
+
+    <script>
+
+        // ※ 注意要用全形的＊和全形的空白 ※
+
+        // 分解動作
+        // 1. 觀察列和星星數量的變化: 星星數量 = 最終列 + 最終列 - 1
+        //    1＝>1、2=>3、3=>5、4=>7、5=>9
+        // 2. 觀察列和空白數量的變化: 假設以四列舉例
+        //    第一列：1=>3、5=>7
+        //    第二列：1=>2、6=>7
+        //    第三列：1=>1、7=>7
+        //    第四列：
+        // 3. 觀察星星中間位置: 中間位置 = 最終列
+
+        /* 方法一 */
+        // document.getElementById('send').addEventListener('click', function () {
+        //     let height = document.getElementById('treeHeight').value;
+        //     const char = '＊';
+        //     let charLength = 1;
+        //     const space = '　';
+        //     let spaceLength = height - 1;
+        //     let tree = '';
+        //     for (let i = 0; i < height; i++) {
+        //         let spaces = space.repeat(spaceLength);
+        //         tree += `<p>${spaces}${char.repeat(charLength)}</p>`;
+        //         charLength += 2;
+        //         spaceLength--;
+        //     }
+        //     console.log(tree);
+        //     document.getElementById('treeHeight').value = '';
+        //     document.getElementById('show').innerHTML = tree;
+        // }, false);
+
+        /* 方法二 */
+        document.getElementById('send').addEventListener('click', function (e) {
+            e.preventDefault();
+            let height = document.getElementById('treeHeight').value;
+            const char = '＊';
+            const space = '　';
+            let text = '';
+            if (height > 1) {
+                let x = 1;
+                for (let i = 1; i <= height; i++) {
+                    text += '<p>';
+                    for (let j = 0; j < height - i; j++) {
+                        text += space;
+                    }
+                    for (let k = 0; k < x; k++) {
+                        text += char;
+                    }
+                    x += 2;
+                    text += '</p>';
+                }
+            } else {
+                text = char;
+            }
+            document.getElementById('treeHeight').value = '';
+            document.getElementById('show').innerHTML = text;
+        }, false);
+
+    </script>
+</body>
+
+</html>
